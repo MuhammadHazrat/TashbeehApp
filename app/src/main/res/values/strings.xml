@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TashbeehApp</string>
+    <string name="label_report" />
+    <string name="label_type_your_comment" />
+    <string name="label_submit" />
+    <string name="label_cancel" />
 </resources>

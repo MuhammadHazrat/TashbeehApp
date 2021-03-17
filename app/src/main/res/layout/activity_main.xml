@@ -10,36 +10,68 @@
         android:id="@+id/plusBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="162dp"
-        android:layout_marginTop="226dp"
-        android:layout_marginEnd="162dp"
         android:onClick="plusBtnClicked"
-        android:text="Plus"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="+"
+        android:textSize="32sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/resetBtn"
+        app:layout_constraintEnd_toStartOf="@+id/resetBtn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/minusBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="233dp"
         android:onClick="minusButtonClicked"
-        android:text="Minus"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/textView" />
+        android:text="-"
+        android:textSize="32sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/resetBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/resetBtn" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="52dp"
+        android:layout_marginTop="89dp"
+        android:layout_marginEnd="32dp"
         android:text="0"
-        android:textSize="42sp"
+        android:textSize="128sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/minusBtn"
-        app:layout_constraintEnd_toEndOf="@+id/plusBtn"
-        app:layout_constraintStart_toStartOf="@+id/plusBtn" />
+        app:layout_constraintEnd_toEndOf="@+id/resetBtn"
+        app:layout_constraintTop_toBottomOf="@+id/target" />
+
+    <Button
+        android:id="@+id/resetBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:onClick="resetBtnClicked"
+        android:text="Reset"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toStartOf="@+id/minusBtn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/plusBtn"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/target"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        android:hint="Enter Target"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent"
+        android:imeOptions="actionDone"
+        android:singleLine="true"/>
+
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

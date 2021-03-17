@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/icon"
+        android:title="ADD"
+        android:icon="@drawable/ic_baseline_menu_24"
+        >
+        <item
+            android:id="@+id/addBtn"
+            android:title="Add Tasbeeh"
+            app:showAsAction="never"/>
+    </item>
+
+
+</menu>
