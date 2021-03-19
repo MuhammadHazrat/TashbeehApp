@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/plusBtn"
         android:layout_width="wrap_content"
@@ -37,6 +47,7 @@
         android:layout_marginTop="89dp"
         android:layout_marginEnd="32dp"
         android:text="0"
+        android:textColor="@color/black"
         android:textSize="128sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/resetBtn"
@@ -49,11 +60,41 @@
         android:layout_marginTop="37dp"
         android:onClick="resetBtnClicked"
         android:text="Reset"
+        android:textColor="@color/white"
         android:textSize="32sp"
         app:layout_constraintEnd_toStartOf="@+id/minusBtn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/plusBtn"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/viewFavourite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="110dp"
+        android:onClick="viewTasbeeh"
+        android:visibility="invisible"
+        android:text="View Tasbeeh"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/addFavourite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:onClick="addTashbeehClicked"
+        android:text="Add Tasbeeh"
+        android:visibility="invisible"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/viewFavourite"
+        app:layout_constraintEnd_toStartOf="@+id/viewFavourite"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/target"
@@ -61,17 +102,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
         android:hint="Enter Target"
+        android:imeOptions="actionDone"
         android:inputType="number"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="parent"
-        android:imeOptions="actionDone"
-        android:singleLine="true"/>
-
-
-
-
-
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

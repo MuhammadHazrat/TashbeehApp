@@ -3,8 +3,12 @@ package com.example.tashbeehapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,14 +27,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     Button plusBtn;
     Button minusBtn;
     TextView tvCount;
     EditText target, editTextName, editTextTarget;
+    ArrayList<Tasbeeh> favTasbeeh;
     int favId =0;
     private Vibrator vibrator;
+    private Notification notification;
+    private NotificationManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +54,10 @@ public class MainActivity extends AppCompatActivity {
         tvCount = findViewById(R.id.textView);
         target = findViewById(R.id.target);
 
-        readData();
+        readData(true);
+
+        Intent intent = new Intent(this, CounterService.class);
+//        startService(intent);
 
 
     }
@@ -53,11 +68,14 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
-    private void readData() {
+    private int readData(Boolean wantText) {
         String defaultValue = "0";
         SharedPreferences sharedPreferences = getSharedPreferences("counterFile",MODE_PRIVATE);
         String text = sharedPreferences.getString("name", defaultValue);
-        tvCount.setText(text);
+        if (wantText)
+            tvCount.setText(text);
+
+        return Integer.parseInt(text);
 
     }
 
@@ -137,9 +155,9 @@ public class MainActivity extends AppCompatActivity {
     private void vibrate() {
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         if (Build.VERSION.SDK_INT >= 26) {
-            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
+            vibrator.vibrate(VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE));
         } else {
-            vibrator.vibrate(200);
+            vibrator.vibrate(1000);
         }
     }
 
@@ -147,24 +165,6 @@ public class MainActivity extends AppCompatActivity {
         tvCount.setText("0");
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.addBtn:
-                dialogbox();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
 
     private void dialogbox() {
         final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                 editTextName = dialogView.findViewById(R.id.etName);
                 editTextTarget = dialogView.findViewById(R.id.etTarget);
                 saveFavourite(editTextName.getText().toString(), editTextTarget.getText().toString());
-                Toast.makeText(MainActivity.this, "btn1", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "saved", Toast.LENGTH_SHORT).show();
                 dialogBuilder.dismiss();
             }
         });
@@ -197,31 +197,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveFavourite(String name, String target) {// Storing data into SharedPreferences
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+        myRef.child(name).setValue(target);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("counterFile",MODE_PRIVATE);
 
-        // Creating an Editor object to edit(write to the file)
-        SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
-        // Storing the key and its value as the data fetched from edittext
-        myEdit.putString(name, target);
 
-        // Once the changes have been made,
-        // we need to commit to apply those changes made,
-        // otherwise, it will throw an error
-        myEdit.apply();
     }
 
-    private void readFavourite(String name) {
-        String defaultValue = "0";
-        SharedPreferences sharedPreferences = getSharedPreferences("counterFile",MODE_PRIVATE);
-        String text = sharedPreferences.getString(name, defaultValue);
-        target.setText(text);
+    public void addTashbeehClicked(View view) {
+        dialogbox();
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-//        menu.add(Menu.NONE, 2, Menu.NONE, editTextName.getText().toString());
-        return super.onPrepareOptionsMenu(menu);
+
+    public void viewTasbeeh(View view) {
+
+        Intent intent = new Intent(this, FavouritesActivity.class);
+        intent.putExtra("favTasbeeh", favTasbeeh);
+        startActivity(intent);
     }
+
 }
